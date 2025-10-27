@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aptitude Test</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Aptitude Test</h1>
+    <p>Answer 5 MCQs (Verbal, Quant, GK)</p>
+
+    <form id="aptitude-form">
+      <p>1. Synonym of "Happy":</p>
+      <label><input type="radio" name="q1" value="Sad"> Sad</label><br>
+      <label><input type="radio" name="q1" value="Joyful"> Joyful</label><br><br>
+
+      <p>2. 15 + 25 = ?</p>
+      <label><input type="radio" name="q2" value="30"> 30</label><br>
+      <label><input type="radio" name="q2" value="40"> 40</label><br><br>
+
+      <button type="submit">Submit Test</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("aptitude-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      let score = 0;
+      if (document.querySelector('input[name="q1"]:checked')?.value === "Joyful") score++;
+      if (document.querySelector('input[name="q2"]:checked')?.value === "40") score++;
+
+      // Store score locally
+      localStorage.setItem("testScore", score);
+
+      alert(`Test Complete! Score: ${score}/2`);
+      
+      // Redirect to next page
+      window.location.href = "test-completion.html";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Login</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3EGraduation Cap%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+  <header>
+    <img src="logo.png" alt="">
+    <h1>Student Login</h1>
+    <p>Join the Career Guidance Portal</p>
+  </header>
+
+  <div class="container">
+    <form id="login-form">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="example@gmail.com" required />
+
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="••••••••" required />
+
+      <button type="submit" class="btn">Login</button>
+    </form>
+
+    <p class="mt-2">
+      Don't have an account? <a href="signup.html">Sign Up</a>
+    </p>
+    <p><a href="index.html">Back to Home</a></p>
+  </div>
+
+  <!-- ==============================
+       Firebase Login Script
+       ============================== -->
+  <script type="module">
+  import { auth } from "./js/firebase-config.js";
+  import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+  const form = document.getElementById("login-form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    console.log("[LOG] Attempting login with", email);
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      console.log("[LOG] Login successful:", user.uid);
+      alert("✅ Login Successful!");
+      localStorage.setItem("userUID", user.uid);
+      window.location.href = "career-selection.html";
+    } catch (error) {
+      console.error("[LOG] Login failed:", error);
+      alert("❌ Login Failed: " + error.message);
+    }
+  });
+</script>
+
+</body>
+</html>

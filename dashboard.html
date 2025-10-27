@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎓 Student Dashboard</h1>
+    <p>Welcome to your personalized career summary</p>
+
+    <div id="summary" class="dashboard-card">
+      <p><strong>Stream:</strong> <span id="stream"></span></p>
+      <p><strong>Preferred Location:</strong> <span id="location"></span></p>
+      <p><strong>Selected College:</strong> <span id="college"></span></p>
+      <p><strong>Aptitude Score:</strong> <span id="score"></span>/2</p>
+    </div>
+
+    <div class="actions">
+      <button id="restart-btn">Start Again</button>
+      <button id="logout-btn">Logout</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+    // ✅ Initialize Firebase (use your config)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // ✅ Retrieve saved data
+    const stream = localStorage.getItem("selectedStream");
+    const locationPref = localStorage.getItem("selectedLocation");
+    const college = localStorage.getItem("selectedCollege");
+    const score = localStorage.getItem("testScore");
+
+    // ✅ Display values
+    document.getElementById("stream").textContent = stream || "Not selected";
+    document.getElementById("location").textContent = locationPref || "Not selected";
+    document.getElementById("college").textContent = college || "Not selected";
+    document.getElementById("score").textContent = score || "0";
+
+    // ✅ Restart
+    document.getElementById("restart-btn").addEventListener("click", () => {
+      localStorage.clear();
+      alert("Restarting your journey...");
+      window.location.href = "career-selection.html";
+    });
+
+    // ✅ Logout
+    document.getElementById("logout-btn").addEventListener("click", () => {
+      signOut(auth)
+        .then(() => {
+          localStorage.clear();
+          alert("Logged out successfully!");
+          window.location.href = "login.html";
+        })
+        .catch((err) => console.error("Logout error:", err));
+    });
+  </script>
+</body>
+</html>

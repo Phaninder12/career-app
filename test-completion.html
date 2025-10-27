@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Completion</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎉 Test Completed!</h1>
+    <p id="result"></p>
+    <button id="finish-btn">Go to Dashboard</button>
+  </div>
+
+  <script>
+    // ✅ Retrieve stored details
+    const stream = localStorage.getItem("selectedStream");
+    const locationPref = localStorage.getItem("selectedLocation");
+    const college = localStorage.getItem("selectedCollege");
+    const score = localStorage.getItem("testScore");
+
+    // ✅ Display details
+    const resultElement = document.getElementById("result");
+
+    if (score !== null) {
+      resultElement.innerHTML = `
+        <strong>Your Test Summary:</strong><br><br>
+        Stream: ${stream || "Not selected"}<br>
+        Location: ${locationPref || "Not selected"}<br>
+        College: ${college || "Not selected"}<br>
+        Score: <strong>${score}/2</strong>
+      `;
+    } else {
+      resultElement.textContent = "No test data found. Please retake the test.";
+    }
+
+    // ✅ Redirect to Dashboard
+    document.getElementById("finish-btn").addEventListener("click", () => {
+      window.location.href = "dashboard.html";
+    });
+  </script>
+</body>
+</html>

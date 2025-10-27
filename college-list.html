@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College List</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Recommended Colleges</h1>
+    <p>Stream: <span id="stream"></span> | Location: <span id="location"></span></p>
+    <div id="colleges"></div>
+  </div>
+
+  <script>
+    // ✅ Fetch stored values
+    const stream = localStorage.getItem("selectedStream");
+    const selectedLocation = localStorage.getItem("selectedLocation");
+
+    // ✅ Display the selected options
+    document.getElementById("stream").textContent = stream || "Not selected";
+    document.getElementById("location").textContent = selectedLocation || "Not selected";
+
+    // ✅ College data
+    const collegeData = {
+      India: [
+        { name: "IIT Delhi", fees: "₹2.5L/year", rank: 2 },
+        { name: "VIT Vellore", fees: "₹1.98L/year", rank: 12 },
+        { name: "BITS Pilani", fees: "₹4.2L/year", rank: 5 }
+      ],
+      Abroad: [
+        { name: "MIT, USA", fees: "$53K/year", rank: 1 },
+        { name: "University of Toronto, Canada", fees: "CA$45K/year", rank: 18 },
+        { name: "Imperial College London, UK", fees: "£38K/year", rank: 6 }
+      ]
+    };
+
+    // ✅ Load the colleges for the selected location
+    const colleges = collegeData[selectedLocation] || [];
+    const list = document.getElementById("colleges");
+
+    if (colleges.length === 0) {
+      list.innerHTML = "<p>No colleges found for this location.</p>";
+    } else {
+      colleges.forEach(college => {
+        const div = document.createElement("div");
+        div.className = "college-card";
+        div.innerHTML = `
+          <h3>${college.name}</h3>
+          <p>Fees: ${college.fees} | Rank: ${college.rank}</p>
+          <button onclick="selectCollege('${college.name}')">Select</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    // ✅ College selection handler
+    
+  function selectCollege(name) {
+    localStorage.setItem("selectedCollege", name);
+    alert(`Selected College: ${name}`);
+    window.location.href = "aptitude-test.html";
+  }
+</script>
+</body>
+</html>

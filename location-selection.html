@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location Selection</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Location Preference</h1>
+    <p>Where do you want to study?</p>
+    <div class="options">
+      <button onclick="goToCollegeList('India')">INDIA</button>
+      <button onclick="goToCollegeList('Abroad')">ABROAD</button>
+    </div>
+  </div>
+
+  <script>
+    function goToCollegeList(location) {
+      localStorage.setItem("selectedLocation", location);
+      console.log(`Selected location: ${location}`);
+      window.location.href = "college-list.html";
+    }
+  </script>
+</body>
+</html>

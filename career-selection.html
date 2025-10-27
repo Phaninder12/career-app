@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Career Selection</title>
+  <link rel="stylesheet" href="style.css" /> 
+</head>
+<body>
+
+  <header>
+    <h1>Career Selection</h1>
+    <p>Choose your stream</p>
+  </header>
+
+  <div class="container">
+    <div class="options">
+      <button class="btn" onclick="select('Engineering')">Engineering</button>
+      <button class="btn" onclick="select('Management')">Management</button>
+    </div>
+  </div>
+
+  <script>
+    function select(stream) {
+      localStorage.setItem("selectedStream", stream);
+      alert("Selected: " + stream);
+      window.location.href = "location-selection.html";
+    }
+  </script>
+</body>
+</html>
