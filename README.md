@@ -70,7 +70,12 @@ career-guidance/
 ├── dashboard.html
 │
 ├── js/
-│   └── logging.js
+│   └── firebase-config.js
+└── auth.js
+└── login.js
+└── logging.js
+
+
 │
 ├── style.css
 └── README.md
