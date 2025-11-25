@@ -47,32 +47,29 @@
     </div>
   </main>
 
-  <!-- Firebase v9+ + Auth Logic -->
+  <!-- Firebase v9+ -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
     import { logAction } from "./js/logging.js";
 
-    // Initialize Firebase
     const firebaseConfig = {
-        apiKey: "AIzaSyCosehypmklp8ROxKDI8sEmwRV-kksFtqY",
-  authDomain: "career-app-86056.firebaseapp.com",
-  projectId: "career-app-86056",
-  storageBucket: "career-app-86056.firebasestorage.app",
-  messagingSenderId: "832412818085",
-  appId: "1:832412818085:web:01fb3fb2c65c77c76a4b4c",
-  measurementId: "G-P5DEJHWG6N"
-
-
+      apiKey: "AIzaSyCosehypmklp8ROxKDI8sEmwRV-kksFtqY",
+      authDomain: "career-app-86056.firebaseapp.com",
+      projectId: "career-app-86056",
+      storageBucket: "career-app-86056.firebasestorage.app",
+      messagingSenderId: "832412818085",
+      appId: "1:832412818085:web:01fb3fb2c65c77c76a4b4c",
+      measurementId: "G-P5DEJHWG6N"
     };
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-    window.logAction = logAction;
 
-    // Form Submission
-    document.getElementById("signupForm").onsubmit = async (e) => {
+    // Signup Handler
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
       e.preventDefault();
 
       const fullName = document.getElementById("fullName").value.trim();
@@ -80,24 +77,15 @@
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
 
-      // Validation
       if (password !== confirmPassword) {
         alert("Passwords do not match!");
-        logAction("Signup failed: Password mismatch", email);
-        return;
-      }
-      if (password.length < 6) {
-        alert("Password must be at least 6 characters!");
-        logAction("Signup failed: Weak password", email);
         return;
       }
 
       try {
-        // Create user in Firebase Auth
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // Save user profile in Firestore
         await setDoc(doc(db, "students", user.uid), {
           fullName,
           email,
@@ -105,21 +93,15 @@
           role: "student"
         });
 
-        logAction("Student signed up successfully", user.uid);
         alert("Account created successfully!");
+        logAction("Student signed up", user.email);
         window.location.href = "dashboard.html";
-
       } catch (error) {
-        console.error("Signup error:", error);
-        alert("Signup failed: " + error.message);
-        logAction(`Signup failed: ${error.message}`, email);
+        alert(error.message);
+        console.error(error);
       }
-    };
-
-    // Log page load
-    logAction("Signup page loaded", "Visitor");
+    });
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
